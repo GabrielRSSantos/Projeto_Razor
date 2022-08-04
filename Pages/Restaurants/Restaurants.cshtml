@@ -3,4 +3,26 @@
 @{
 }
 
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm">
+                <button class="btn btn-default">
+                <i class="fas fa-search"></i>
+                </button>
+        </div>
+    </div>
+</form> 
+
+<table class="table">
+    @foreach (var res in Model.ListRestaurants!)
+    {
+        <tr>
+            <td>@res.Name</td>
+            <td>@res.Location</td>
+            <td>@res.Cuisine</td>
+        </tr>
+    }
+</table>
+
 <h1>Pagina @Model.Message Criada</h1>
