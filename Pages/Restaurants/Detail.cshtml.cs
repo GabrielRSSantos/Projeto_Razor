@@ -6,16 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OdeToFood.Core;
+using OdeToFood.Data;
 
 namespace C_.Pages.Restaurants
 {
     public class Detail : PageModel
     {
-        public Restaurant? Restaurant {get; set;}
-        public void OnGet(int restaurantId)
+        private readonly IRestaurantData RestaurantData;
+        public Detail(IRestaurantData restaurantData)
         {
-            Restaurant = new Restaurant();
-            Restaurant.Id = restaurantId;
+            this.RestaurantData = restaurantData;
+        }
+        public Restaurant? Restaurant {get; set;}
+        public IActionResult OnGet(int restaurantId)
+        {
+            Restaurant = RestaurantData.GetById(restaurantId);
+            if(Restaurant == null)
+            {
+                return RedirectToPage("/Restaurants/NotFound");
+            }
+            return Page();
         }
     }
 }
